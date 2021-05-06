@@ -1,0 +1,224 @@
+﻿@page "/"
+
+<h1>Equation Calculator</h1>
+
+
+
+<div class="container" style="border:groove">
+    <br />
+    <input type="text" class="form-control" placeholder="Type your equation here" @bind ="InputValue"/>   
+    <p>@MESSAGE</p>
+    <br />
+    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" DotButton_Click">.</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+             <button class="btn btn-primary"    @onclick=" ZeroButton_Click">Zero</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" DelButton_Click">Del</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" DivButton_Click">/</button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" SevenButton_Click">7</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" EightButton_Click">8</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" NineButton_Click">9</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" MulButton_Click">*</button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" FourButton_Click">4</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" FiveButton_Click">5</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" SixButton_Click">6</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" MinusButton_Click">-</button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" OneButton_Click">1</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" TwoButton_Click">2</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" ThreeButton_Click">3</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <button class="btn btn-primary" @onclick=" PlusButton_Click">+</button>
+            </div>
+        </div>
+    </div>
+    <br />   
+    <button class="btn btn-primary form-control" type="button"  @onclick="CalculateButton_Click">Calculate</button>
+  </div>
+@code{ 
+    private string MESSAGE;
+    private string STR;
+    // Button Click CE 
+    private void DotButton_Click()
+    {
+        InputValue = InputValue + ".";
+    }
+    private void DelButton_Click()
+    {
+
+    }
+    private void ZeroButton_Click()
+    {
+        InputValue = InputValue + "0";
+    }
+    private void DivButton_Click()
+    {
+        InputValue = InputValue + "2/";
+    }
+    private void SevenButton_Click()
+    {
+        InputValue = InputValue + "7";
+    }
+    private void EightButton_Click()
+    {
+        InputValue = InputValue + "8";
+    }
+    private void NineButton_Click()
+    {
+        InputValue = InputValue + "9";
+    }
+    private void MulButton_Click()
+    {
+        InputValue = InputValue + "*";
+    }
+    private void FourButton_Click()
+    {
+        InputValue = InputValue + "4";
+    }
+    private void FiveButton_Click()
+    {
+        InputValue = InputValue + "5";
+    }
+    private void SixButton_Click()
+    {
+        InputValue = InputValue + "6";
+    }
+    private void MinusButton_Click()
+    {
+        InputValue = InputValue + "-";
+    }
+    private void OneButton_Click()
+    {
+        InputValue = InputValue + "1";
+    }
+    private void TwoButton_Click()
+    {
+        InputValue = InputValue + "2";
+    }
+    private void ThreeButton_Click()
+    {
+        InputValue = InputValue + "3";
+    }
+    private void PlusButton_Click()
+    {
+        InputValue = InputValue + "+";
+    }
+
+    [Parameter]
+    public string InputValue { get; set; }
+
+    // This method is Called when the Page is Load first time 
+
+    protected override void OnInitialized()
+    {
+        MESSAGE = "Enter your equation here like: 1+2.3/4*5-6";
+    }
+
+    const string INVALID_INPUT = "Your input was invalid.";
+
+    // Calculate button Click
+    public void CalculateButton_Click()
+    {
+        try
+        {
+            STR = InputValue;
+            InputValue = CalculateEquation();           
+            MESSAGE = STR + "=" + InputValue ;
+            InputValue = "";
+        }
+        catch (Exception ex)
+        {
+            MESSAGE = ex.Message;
+        }
+    }
+
+    public string CalculateEquation()
+    {
+        // we tested this equation = "1+2.3/4*5-6";
+        string equation = InputValue;
+        // Remove spaces in the equation
+        equation = equation.Replace(" ", String.Empty);
+        // Validate the equation
+        if (!Calc.IsValidEquation(equation))
+        {
+            return INVALID_INPUT;
+        }
+        // Solve the equation
+        else
+        {
+            double answers = Calc.Solve(equation);
+            return answers.ToString();
+        }
+    }
+
+
+}
+
